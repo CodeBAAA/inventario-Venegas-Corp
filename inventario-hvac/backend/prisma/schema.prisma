@@ -1,0 +1,115 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  ADMIN
+  USER
+}
+
+enum ToolStatus {
+  DISPONIBLE
+  EN_USO
+  DANADA
+  PERDIDA
+  POR_COMPRAR
+}
+
+enum Priority {
+  BAJA
+  MEDIA
+  ALTA
+}
+
+model User {
+  id        Int      @id @default(autoincrement())
+  name      String
+  email     String   @unique
+  password  String
+  role      Role     @default(USER)
+  createdAt DateTime @default(now())
+  tools     Tool[]
+  lists     ShoppingList[]
+}
+
+model Category {
+  id          Int        @id @default(autoincrement())
+  name        String     @unique
+  description String?
+  parentId    Int?
+  parent      Category?  @relation("CategoryTree", fields: [parentId], references: [id])
+  children    Category[] @relation("CategoryTree")
+  tools       Tool[]
+  createdAt   DateTime   @default(now())
+}
+
+model Tool {
+  id              Int        @id @default(autoincrement())
+  code            String     @unique
+  name            String
+  description     String?
+  brand           String?
+  model           String?
+  serialNumber    String?
+  quantity        Int        @default(1)
+  minimumQuantity Int        @default(1)
+  unit            String     @default("unidad")
+  location        String?
+  status          ToolStatus @default(DISPONIBLE)
+  imageUrl        String?
+  categoryId      Int
+  userId          Int?
+  category        Category   @relation(fields: [categoryId], references: [id])
+  user            User?      @relation(fields: [userId], references: [id])
+  jobTypeItems JobTypeTool[]
+  createdAt       DateTime   @default(now())
+  updatedAt       DateTime   @updatedAt
+}
+
+model ShoppingList {
+  id          Int                @id @default(autoincrement())
+  name        String
+  description String?
+  userId      Int
+  user        User               @relation(fields: [userId], references: [id])
+  items       ShoppingListItem[]
+  createdAt   DateTime           @default(now())
+}
+
+model ShoppingListItem {
+  id             Int          @id @default(autoincrement())
+  listId         Int
+  toolName       String
+  description    String?
+  quantityNeeded Int          @default(1)
+  priority       Priority     @default(MEDIA)
+  purchased      Boolean      @default(false)
+  list           ShoppingList @relation(fields: [listId], references: [id], onDelete: Cascade)
+  createdAt      DateTime     @default(now())
+}
+model JobType {
+  id          Int           @id @default(autoincrement())
+  name        String        @unique
+  description String?
+  items       JobTypeTool[]
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+}
+
+model JobTypeTool {
+  id           Int      @id @default(autoincrement())
+  jobTypeId    Int
+  toolId       Int
+  quantityNeed Int      @default(1)
+  note         String?
+
+  jobType      JobType  @relation(fields: [jobTypeId], references: [id], onDelete: Cascade)
+  tool         Tool     @relation(fields: [toolId], references: [id])
+
+  @@unique([jobTypeId, toolId])
+}
