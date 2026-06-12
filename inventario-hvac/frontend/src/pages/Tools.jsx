@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { apiFetch } from '../api/client';
+import QRModal from '../components/QRModal';
 
 const emptyForm = {
   name: '',
@@ -23,7 +24,7 @@ export default function Tools() {
     categoryId: '',
     status: ''
   });
-
+  const [selectedToolQR, setSelectedToolQR] = useState(null);
   const [form, setForm] = useState(emptyForm);
   const [editingId, setEditingId] = useState(null);
   const [error, setError] = useState('');
@@ -308,6 +309,13 @@ export default function Tools() {
 
                   <button
                     type="button"
+                    onClick={() => setSelectedToolQR(tool)}
+                  >
+                    Ver QR
+                  </button>
+
+                  <button
+                    type="button"
                     className="danger-button"
                     onClick={() => removeTool(tool.id)}
                   >
@@ -319,6 +327,11 @@ export default function Tools() {
           </tbody>
         </table>
       </div>
+
+      <QRModal
+        tool={selectedToolQR}
+        onClose={() => setSelectedToolQR(null)}
+      />
     </section>
   );
 }
