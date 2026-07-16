@@ -1,0 +1,132 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1000" viewBox="0 0 1600 1000">
+  <defs>
+    <style>
+      .bg { fill: #f6f8fb; }
+      .title { font: 700 40px Arial, sans-serif; fill: #102033; }
+      .subtitle { font: 400 21px Arial, sans-serif; fill: #536173; }
+      .layer-title { font: 700 22px Arial, sans-serif; fill: #26384d; }
+      .box-title { font: 700 22px Arial, sans-serif; fill: #172336; }
+      .box-text { font: 400 17px Arial, sans-serif; fill: #405168; }
+      .small { font: 400 15px Arial, sans-serif; fill: #526172; }
+      .box { fill: #ffffff; stroke: #c9d4e2; stroke-width: 2; rx: 12; }
+      .frontend { fill: #eef7ff; stroke: #82b7e6; }
+      .backend { fill: #f1fff5; stroke: #7fcf98; }
+      .logic { fill: #fff8e8; stroke: #dfbb63; }
+      .data { fill: #f8efff; stroke: #b897df; }
+      .security { fill: #fff1f1; stroke: #e18c8c; }
+      .external { fill: #f0f4f8; stroke: #9daab8; }
+      .arrow { stroke: #526172; stroke-width: 3; fill: none; marker-end: url(#arrowhead); }
+      .arrow-soft { stroke: #8b99a8; stroke-width: 2.5; fill: none; marker-end: url(#arrowheadSoft); stroke-dasharray: 8 7; }
+      .pill { fill: #e8edf3; stroke: #c9d4e2; rx: 18; }
+      .pill-text { font: 700 15px Arial, sans-serif; fill: #344256; }
+    </style>
+    <marker id="arrowhead" markerWidth="12" markerHeight="8" refX="11" refY="4" orient="auto">
+      <polygon points="0 0, 12 4, 0 8" fill="#526172"/>
+    </marker>
+    <marker id="arrowheadSoft" markerWidth="12" markerHeight="8" refX="11" refY="4" orient="auto">
+      <polygon points="0 0, 12 4, 0 8" fill="#8b99a8"/>
+    </marker>
+  </defs>
+
+  <rect class="bg" x="0" y="0" width="1600" height="1000"/>
+
+  <text class="title" x="80" y="75">Diagrama de arquitectura preliminar</text>
+  <text class="subtitle" x="80" y="112">Sistema web de inventario de herramientas HVAC - Venegas Corp</text>
+
+  <rect class="pill" x="1185" y="58" width="335" height="44"/>
+  <text class="pill-text" x="1210" y="86">Frontend React + Backend Express + MySQL</text>
+
+  <!-- User layer -->
+  <rect class="box external" x="80" y="185" width="280" height="145"/>
+  <text class="box-title" x="115" y="230">Usuario / Tecnico</text>
+  <text class="box-text" x="115" y="264">- Consulta inventario</text>
+  <text class="box-text" x="115" y="292">- Registra herramientas</text>
+  <text class="box-text" x="115" y="320">- Crea listas de compra</text>
+
+  <rect class="box external" x="80" y="390" width="280" height="125"/>
+  <text class="box-title" x="115" y="433">Administrador</text>
+  <text class="box-text" x="115" y="468">- Gestiona usuarios</text>
+  <text class="box-text" x="115" y="496">- Elimina datos criticos</text>
+
+  <!-- Frontend -->
+  <rect class="box frontend" x="455" y="175" width="330" height="360"/>
+  <text class="layer-title" x="490" y="220">Capa de presentacion</text>
+  <text class="box-title" x="490" y="268">Frontend React + Vite</text>
+  <text class="box-text" x="490" y="308">Pantallas principales:</text>
+  <text class="box-text" x="510" y="340">Dashboard</text>
+  <text class="box-text" x="510" y="370">Herramientas</text>
+  <text class="box-text" x="510" y="400">Categorias</text>
+  <text class="box-text" x="510" y="430">Lista de compras</text>
+  <text class="box-text" x="510" y="460">Tipos de trabajo</text>
+  <text class="box-text" x="510" y="490">Usuarios (admin)</text>
+
+  <rect class="box security" x="455" y="585" width="330" height="145"/>
+  <text class="box-title" x="490" y="630">Sesion en navegador</text>
+  <text class="box-text" x="490" y="668">Token JWT guardado</text>
+  <text class="box-text" x="490" y="696">en localStorage</text>
+
+  <!-- Backend -->
+  <rect class="box backend" x="900" y="160" width="345" height="610"/>
+  <text class="layer-title" x="935" y="205">Capa de servicios</text>
+  <text class="box-title" x="935" y="248">API REST Node.js + Express</text>
+  <text class="box-text" x="935" y="292">Rutas:</text>
+  <text class="box-text" x="955" y="324">/api/auth</text>
+  <text class="box-text" x="955" y="354">/api/tools</text>
+  <text class="box-text" x="955" y="384">/api/categories</text>
+  <text class="box-text" x="955" y="414">/api/shopping-lists</text>
+  <text class="box-text" x="955" y="444">/api/job-types</text>
+  <text class="box-text" x="955" y="474">/api/reports</text>
+  <text class="box-text" x="955" y="504">/api/users</text>
+
+  <rect class="box security" x="935" y="545" width="275" height="92"/>
+  <text class="box-title" x="960" y="582">Seguridad</text>
+  <text class="box-text" x="960" y="614">JWT, bcrypt, CORS, Helmet</text>
+
+  <rect class="box logic" x="935" y="660" width="275" height="78"/>
+  <text class="box-title" x="960" y="695">Controladores MVC</text>
+  <text class="box-text" x="960" y="724">Reglas de negocio</text>
+
+  <!-- Data layer -->
+  <rect class="box data" x="1340" y="205" width="210" height="160"/>
+  <text class="box-title" x="1373" y="252">Prisma ORM</text>
+  <text class="box-text" x="1373" y="292">Modelos y consultas</text>
+  <text class="box-text" x="1373" y="322">a la base de datos</text>
+
+  <rect class="box data" x="1320" y="435" width="250" height="245"/>
+  <text class="box-title" x="1364" y="482">MySQL 8</text>
+  <text class="box-text" x="1350" y="520">Tablas principales:</text>
+  <text class="box-text" x="1370" y="550">Users</text>
+  <text class="box-text" x="1370" y="578">Tools</text>
+  <text class="box-text" x="1370" y="606">Categories</text>
+  <text class="box-text" x="1370" y="634">ShoppingLists</text>
+  <text class="box-text" x="1370" y="662">JobTypes</text>
+
+  <!-- Outputs -->
+  <rect class="box external" x="895" y="835" width="315" height="105"/>
+  <text class="box-title" x="930" y="878">Reportes PDF</text>
+  <text class="box-text" x="930" y="912">Inventario y listas de compra</text>
+
+  <rect class="box external" x="1320" y="755" width="250" height="105"/>
+  <text class="box-title" x="1360" y="798">Docker</text>
+  <text class="box-text" x="1350" y="832">Contenedor MySQL</text>
+
+  <!-- Arrows -->
+  <path class="arrow" d="M360 258 C392 258, 410 258, 455 258"/>
+  <path class="arrow" d="M360 452 C398 452, 414 452, 455 452"/>
+  <path class="arrow" d="M785 355 C832 355, 850 355, 900 355"/>
+  <path class="arrow-soft" d="M620 585 C620 555, 620 555, 620 535"/>
+  <path class="arrow" d="M1245 465 C1280 465, 1295 320, 1340 292"/>
+  <path class="arrow" d="M1445 365 C1445 395, 1445 405, 1445 435"/>
+  <path class="arrow-soft" d="M1070 770 C1070 800, 1060 810, 1060 835"/>
+  <path class="arrow-soft" d="M1445 755 C1445 725, 1445 710, 1445 680"/>
+
+  <!-- Flow labels -->
+  <text class="small" x="385" y="240">usa</text>
+  <text class="small" x="810" y="335">HTTP/JSON</text>
+  <text class="small" x="1268" y="420">consultas</text>
+  <text class="small" x="1460" y="405">persistencia</text>
+  <text class="small" x="1078" y="812">genera</text>
+
+  <!-- Footer -->
+  <text class="subtitle" x="80" y="930">Objetivo: controlar herramientas disponibles, en uso, danadas, perdidas o por comprar, con reportes y permisos por rol.</text>
+</svg>

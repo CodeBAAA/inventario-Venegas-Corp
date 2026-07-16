@@ -465,6 +465,38 @@ th {
   font-weight: 800;
 }
 
+.test-result {
+  display: flex;
+  gap: 14px;
+  align-items: center;
+  border-radius: 18px;
+  padding: 18px 20px;
+  margin-bottom: 22px;
+  border: 1px solid var(--border);
+}
+
+.test-result strong,
+.test-result span {
+  display: block;
+}
+
+.test-result span {
+  color: var(--muted);
+  margin-top: 3px;
+}
+
+.test-result.passed {
+  background: #ecfdf5;
+  border-color: #86efac;
+  color: #166534;
+}
+
+.test-result.failed {
+  background: #fef2f2;
+  border-color: #fecaca;
+  color: #991b1b;
+}
+
 @media (max-width: 1000px) {
   .job-layout,
   .checklist-row {
