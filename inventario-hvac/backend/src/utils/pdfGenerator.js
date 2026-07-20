@@ -35,11 +35,24 @@ function createShoppingListPdf(list) {
 }
 
 function createInventoryPdf(tools) {
-  const doc = new PDFDocument({ margin: 40 });
+  const doc = new PDFDocument({ size: 'LETTER', margin: 40 });
 
   addHeader(doc, 'Inventario de herramientas HVAC');
 
+  doc.fontSize(14).text('Resumen del inventario');
+  doc.moveDown(0.5);
+  doc.fontSize(10).text(`Total de herramientas: ${tools.length}`);
+  doc.moveDown();
+
+  if (tools.length === 0) {
+    doc.fontSize(12).text('No hay herramientas registradas en el inventario.');
+  }
+
   tools.forEach((tool, index) => {
+    if (doc.y > 700) doc.addPage();
+
+    const lowStock = tool.quantity < tool.minimumQuantity ? 'Sí' : 'No';
+
     doc.fontSize(11).text(`${index + 1}. ${tool.code} - ${tool.name}`);
     doc.fontSize(10).text(`   Categoría: ${tool.category?.name || 'Sin categoría'}`);
     doc.text(`   Marca/Modelo: ${tool.brand || '-'} / ${tool.model || '-'}`);
@@ -47,6 +60,7 @@ function createInventoryPdf(tools) {
     doc.text(`   Mínimo recomendado: ${tool.minimumQuantity}`);
     doc.text(`   Ubicación: ${tool.location || '-'}`);
     doc.text(`   Estado: ${tool.status}`);
+    doc.text(`   Bajo stock: ${lowStock}`);
     doc.moveDown(0.5);
   });
 
