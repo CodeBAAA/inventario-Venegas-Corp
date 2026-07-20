@@ -40,13 +40,26 @@ export async function downloadApiFile(path, filename) {
   }
 
   const blob = await response.blob();
+
+  if (!blob.size) {
+    throw new Error('El servidor devolvió un archivo vacío');
+  }
+
+  if (!blob.type.includes('application/pdf')) {
+    throw new Error(`El servidor devolvió un archivo inesperado (${blob.type || 'sin tipo'})`);
+  }
+
   const url = window.URL.createObjectURL(blob);
   const link = document.createElement('a');
 
   link.href = url;
   link.download = filename;
+  link.style.display = 'none';
   document.body.appendChild(link);
   link.click();
   link.remove();
-  window.URL.revokeObjectURL(url);
+
+  // Safari puede cancelar la descarga si la URL se revoca en el mismo ciclo
+  // del click. Se conserva el tiempo suficiente para que el navegador lea el PDF.
+  window.setTimeout(() => window.URL.revokeObjectURL(url), 60_000);
 }
