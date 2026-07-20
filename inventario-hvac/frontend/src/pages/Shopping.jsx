@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { apiFetch, getApiUrl } from '../api/client';
+import { apiFetch, downloadApiFile } from '../api/client';
 
 export default function Shopping() {
   const [lists, setLists] = useState([]);
@@ -60,36 +60,12 @@ export default function Shopping() {
 
   async function downloadShoppingListPdf(listId) {
     try {
-      const token = localStorage.getItem('hvac_token');
-
-      const response = await fetch(
-        getApiUrl(`/reports/shopping-list/${listId}/pdf`),
-        {
-          method: 'GET',
-          headers: {
-            Authorization: `Bearer ${token}`
-          }
-        }
+      await downloadApiFile(
+        `/reports/shopping-list/${listId}/pdf`,
+        `lista-compras-${listId}.pdf`
       );
-
-      if (!response.ok) {
-        throw new Error('No se pudo generar el PDF');
-      }
-
-      const blob = await response.blob();
-      const url = window.URL.createObjectURL(blob);
-
-      const link = document.createElement('a');
-      link.href = url;
-      link.download = `lista-compras-${listId}.pdf`;
-
-      document.body.appendChild(link);
-      link.click();
-
-      link.remove();
-      window.URL.revokeObjectURL(url);
     } catch (error) {
-      alert('Error al generar el PDF. Verifica que hayas iniciado sesión.');
+      alert(error.message);
     }
   }
 

@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { apiFetch, getApiUrl } from '../api/client';
+import { apiFetch, downloadApiFile } from '../api/client';
 
 export default function Dashboard() {
   const [stats, setStats] = useState(null);
@@ -13,6 +13,14 @@ export default function Dashboard() {
     loadStats();
   }, []);
 
+  async function downloadInventoryPdf() {
+    try {
+      await downloadApiFile('/reports/inventory/pdf', 'inventario-hvac.pdf');
+    } catch (error) {
+      alert(error.message);
+    }
+  }
+
   if (!stats) return <div>Cargando dashboard...</div>;
 
   return (
@@ -22,9 +30,9 @@ export default function Dashboard() {
           <h2>Dashboard</h2>
           <p>Resumen general del inventario</p>
         </div>
-        <a className="primary-link" href={getApiUrl('/reports/inventory/pdf')} target="_blank">
+        <button className="primary-link" type="button" onClick={downloadInventoryPdf}>
           Descargar inventario PDF
-        </a>
+        </button>
       </div>
 
       <div className="stats-grid">

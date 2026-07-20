@@ -27,3 +27,26 @@ export async function apiFetch(path, options = {}) {
 export function getApiUrl(path) {
   return `${API_URL}${path}`;
 }
+
+export async function downloadApiFile(path, filename) {
+  const token = getToken();
+  const response = await fetch(`${API_URL}${path}`, {
+    headers: token ? { Authorization: `Bearer ${token}` } : {}
+  });
+
+  if (!response.ok) {
+    const error = await response.json().catch(() => ({ message: 'No se pudo descargar el archivo' }));
+    throw new Error(error.message || 'No se pudo descargar el archivo');
+  }
+
+  const blob = await response.blob();
+  const url = window.URL.createObjectURL(blob);
+  const link = document.createElement('a');
+
+  link.href = url;
+  link.download = filename;
+  document.body.appendChild(link);
+  link.click();
+  link.remove();
+  window.URL.revokeObjectURL(url);
+}
