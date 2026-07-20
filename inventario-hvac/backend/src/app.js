@@ -13,26 +13,26 @@ const userRoutes = require('./routes/userRoutes');
 
 const app = express();
 
-const allowedOrigins = (process.env.FRONTEND_URL || 'http://localhost:5173,http://localhost:5174')
-  .split(',')
-  .map((origin) => origin.trim())
-  .filter(Boolean);
+app.use(helmet());
+
+const allowedOrigins = [
+  'http://localhost:5173',
+  'http://localhost:5174',
+  'https://main.d18h206gzixoy1.amplifyapp.com'
+];
 
 const corsOptions = {
-  origin(origin, callback) {
-    // Requests without Origin (for example, curl or server-to-server) are valid.
+  origin: function (origin, callback) {
     if (!origin || allowedOrigins.includes(origin)) {
-      return callback(null, true);
+      callback(null, true);
+    } else {
+      callback(new Error(`Origen no permitido por CORS: ${origin}`));
     }
-
-    return callback(new Error(`Origen no permitido por CORS: ${origin}`));
   },
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization']
 };
-
-app.use(helmet());
 
 app.use(cors(corsOptions));
 

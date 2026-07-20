@@ -30,7 +30,7 @@ Resources:
           NODE_ENV: production
           DATABASE_URL: !Ref DatabaseUrl
           JWT_SECRET: !Ref JwtSecret
-          FRONTEND_URL: "http://localhost:5173,http://localhost:5174"
+          FRONTEND_URL: "http://localhost:5173,http://localhost:5174,https://main.d18h206gzixoy1.amplifyapp.com"
           S3_BUCKET_NAME: "inventario-venegas-files"
 
       VpcConfig:
