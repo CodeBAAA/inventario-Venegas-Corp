@@ -1,4 +1,4 @@
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:4000/api';
+const API_URL = import.meta.env.VITE_API_URL || 'https://y13q1na66e.execute-api.us-west-2.amazonaws.com/api';
 
 function getToken() {
   return localStorage.getItem('hvac_token');

@@ -78,7 +78,7 @@ El archivo tenia esta configuracion:
 
 ```env
 DATABASE_URL="mysql://root:rootpassword@localhost:3306/inventario_hvac"
-JWT_SECRET="secret_hvac_2026_dev_key"
+JWT_SECRET="reemplaza_esto_con_un_secreto_largo_y_aleatorio"
 PORT=4000
 FRONTEND_URL="http://localhost:5173"
 ```
@@ -404,4 +404,3 @@ npm run dev
 cd /Users/mac/Documents/Proyectos\ utp/inventario-Venegas-Corp/inventario-hvac/frontend
 npm run dev
 ```
-
